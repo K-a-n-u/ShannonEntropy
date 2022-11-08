@@ -1,3 +1,12 @@
+(*
+  As a single line: 
+      ShannonEntropy[dist_?DistributionParameterQ] := Expectation[LogLikelihood[dist, {x}], x \[Distributed] dist];
+      
+  References:
+    <https://www.stat.cmu.edu/~cshalizi/754/2006/>
+    <https://www.stat.cmu.edu/~cshalizi/754/2006/notes/lecture-28.pdf>
+      See Definition 258, Page 191 (the bottom of page 3 in the PDF).
+*)
 ShannonEntropy::usage = 
   "Calculate the Shannon Entropy of a random variable distributed according to the input distribution.
   For example: 
