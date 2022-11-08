@@ -8,7 +8,7 @@
       See Definition 258, Page 191 (the bottom of page 3 in the PDF).
 *)
 ShannonEntropy::usage = 
-  "Calculate the Shannon Entropy of a random variable distributed according to the input distribution.
+  "Calculates the Shannon Entropy of a random variable distributed according to the input distribution.
   For example: 
   	Let X \[Distributed] NormalDistribution[0,1], then 
   	H(X) = \!\(\*FractionBox[\(1\), \(2\)]\)(Log[2 \[Pi]]+1) = ShannonEntropy[NormalDistribution[0,1]]
@@ -26,8 +26,7 @@ ShannonEntropy::usage =
   			1. Expectation,
   			2. NExpectation
   	Result:
-  		The entropy of the distribution as defined by Shannon's entropy \
-function, H.";
+  		The entropy of the distribution as defined by Shannon's entropy function, H.";
 ShannonEntropy::errorNotAValidDistribution = "The distribution, `1`, does not appear to be a valid distribution.";
 ShannonEntropy::errorBaseIsProblematic = "The Log of `1` will results in an Indeterminate value, because \Log[0] \[Rule] -\[Infinity] and Log[1] = 0.";
 Options[ShannonEntropy] = {Method -> Expectation};
