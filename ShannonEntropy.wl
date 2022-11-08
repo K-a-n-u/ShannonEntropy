@@ -20,9 +20,9 @@ ShannonEntropy::usage =
   		The entropy of the distribution as defined by Shannon's entropy \
 function, H.";
 ShannonEntropy::errorNotAValidDistribution = "The distribution, `1`, does not appear to be a valid distribution.";
-ShannonEntropy::errorBaseIsProblematic = "The Log of `1` will results in an Indeterminate value, because Log[0] \[Rule] -\[Infinity] and Log[1] = 0.";
+ShannonEntropy::errorBaseIsProblematic = "The Log of `1` will results in an Indeterminate value, because \Log[0] \[Rule] -\[Infinity] and Log[1] = 0.";
 Options[ShannonEntropy] = {Method -> Expectation};
 ShannonEntropy[distribution_?(Not[DistributionParameterQ[#]] &)] := Catch[Throw[Message[ShannonEntropy::errorNotAValidDistribution]; Return[$Failed]]];
-ShannonEntropy[base_?(Not[NumberQ[#]] && # <= 0 || # == 1 &), distribution_] := Catch[Throw[Message[ShannonEntropy::errorBaseIsProblematic]; Return[$Failed]]];
-ShannonEntropy[base_?(NumberQ[#] && 0 < # && # != 1 &), distribution_?DistributionParameterQ] := ShannonEntropy[distribution, optionsShannonEntropy]/Log[base];
-ShannonEntropy[distribution_?DistributionParameterQ] := Function[Block[{#}, Return[-OptionValue[Method][LogLikelihood[distribution, {#}], # \[Distributed] distribution]]]][Unique[]];
+ShannonEntropy[base_?( # <= 0 || # == 1 &), distribution_] := Catch[Throw[Message[ShannonEntropy::errorBaseIsProblematic]; Return[$Failed]]];
+ShannonEntropy[base_?( 0 < # && # != 1 &), distribution_?DistributionParameterQ, optionsShannonEntropy : OptionsPattern[]] := ShannonEntropy[distribution, optionsShannonEntropy]/Log[base];
+ShannonEntropy[distribution_?DistributionParameterQ, optionsShannonEntropy : OptionsPattern[]] := Function[Block[{#}, Return[-OptionValue[Method][LogLikelihood[distribution, {#}], # \[Distributed] distribution]]]][Unique[]];
