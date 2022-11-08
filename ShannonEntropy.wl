@@ -33,5 +33,5 @@ ShannonEntropy::errorBaseIsProblematic = "The Log of `1` will results in an Inde
 Options[ShannonEntropy] = {Method -> Expectation};
 ShannonEntropy[distribution_?(Not[DistributionParameterQ[#]] &)] := Catch[Throw[Message[ShannonEntropy::errorNotAValidDistribution]; Return[$Failed]]];
 ShannonEntropy[base_?( # <= 0 || # == 1 &), distribution_] := Catch[Throw[Message[ShannonEntropy::errorBaseIsProblematic]; Return[$Failed]]];
-ShannonEntropy[base_?( 0 < # && # != 1 &), distribution_?DistributionParameterQ, optionsShannonEntropy : OptionsPattern[]] := ShannonEntropy[distribution, optionsShannonEntropy]/Log[base];
-ShannonEntropy[distribution_?DistributionParameterQ, optionsShannonEntropy : OptionsPattern[]] := Function[Block[{#}, Return[-OptionValue[Method][LogLikelihood[distribution, {#}], # \[Distributed] distribution]]]][Unique[]];
+ShannonEntropy[base_?( 0 < # && # != 1 &), distribution_?DistributionParameterQ, optionsShannonEntropy : OptionsPattern[]] := ShannonEntropy[distribution, optionsShannonEntropy]/Log[base]; (*Transforms the base of the log function.*)
+ShannonEntropy[distribution_?DistributionParameterQ, optionsShannonEntropy : OptionsPattern[]] := Function[Block[{#}, Return[-OptionValue[Method][LogLikelihood[distribution, {#}], # \[Distributed] distribution]]]][Unique[]]; (*this is equivalent to sum x Log(P(x)) using the definition of expectation and Loglikelihood.*)
